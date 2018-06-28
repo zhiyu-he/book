@@ -51,12 +51,13 @@ int main(int argc, char **argv)
     char *in;
     if (argc == 2)
         in = argv[1];
-  		stream = fmemopen(in, sizeof(in), "r");
 
     int n ;
     rio_t rio;
     char buf[MAXLINE];
     rio_readinitb(&rio, STDIN_FILENO);
+    if (in != NULL)
+        rio_writen(STDIN_FILENO, in, 6);
     while((n = rio_readlineb(&rio, buf, MAXLINE)) != 0)
         rio_writen(STDOUT_FILENO, buf,n);
     return 0;
