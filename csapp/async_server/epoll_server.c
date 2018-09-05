@@ -13,9 +13,10 @@
 
 #define SERVER_ADDR "0.0.0.1"
 #define SERVER_PORT 9000
-#define FD_LIMIT    1000
+#define FD_SIZE     1000
 #define MAX_SIZE    87380
 #define EPOLLEVENTS 100
+#define LISTENQ     5
 
 
 static int socket_bind(const char* ip, int port);
@@ -32,6 +33,7 @@ static void delete_event(int epollfd, int fd, int state);
 int main(int argc, char **argv) {
     int listenfd;
     listenfd = socket_bind(SERVER_ADDR, SERVER_PORT);
+    listen(listenfd, LISTENQ);
     do_epool(listenfd);
     return 0;
 }
@@ -61,7 +63,7 @@ static void do_epoll(int listenfd) {
     int ready_cnt;
     char buf[MAXSIZE];
     memset(buf, 0, MAXSIZE);
-    epollfd = epoll_create(FDSIZE);
+    epollfd = epoll_create(FD_SIZE);
     add_event(epollfd, listenfd, EPOLLIN);
     for ( ; ; ) {
         ready_cnt = epoll_wait(epollfd, evernts, EPOLLEVENTS, -1);
