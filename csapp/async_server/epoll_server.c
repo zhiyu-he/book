@@ -13,8 +13,8 @@
 
 #define SERVER_ADDR "0.0.0.1"
 #define SERVER_PORT 9000
-#define FD_SIZE     1000
-#define MAX_SIZE    87380
+#define FDSIZE     1000
+#define MAXSIZE    87380
 #define EPOLLEVENTS 100
 #define LISTENQ     5
 
@@ -58,12 +58,12 @@ static int socket_bind(const char* ip, int port) {
 }
 
 static void do_epoll(int listenfd) {
-    int epoolfd;
+    int epollfd;
     struct epoll_event events[EPOLLEVENTS];
     int ready_cnt;
     char buf[MAXSIZE];
     memset(buf, 0, MAXSIZE);
-    epollfd = epoll_create(FD_SIZE);
+    epollfd = epoll_create(FDSIZE);
     add_event(epollfd, listenfd, EPOLLIN);
     for ( ; ; ) {
         ready_cnt = epoll_wait(epollfd, evernts, EPOLLEVENTS, -1);
