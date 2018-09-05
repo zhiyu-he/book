@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
     int listenfd;
     listenfd = socket_bind(SERVER_ADDR, SERVER_PORT);
     listen(listenfd, LISTENQ);
-    do_epool(listenfd);
+    do_epoll(listenfd);
     return 0;
 }
 
@@ -47,7 +47,7 @@ static int socket_bind(const char* ip, int port) {
         exit(1);
     }
     bzero(&servaddr, sizeof(servaddr));
-    servaddr.sin_family = AF_INEF;
+    servaddr.sin_family = AF_INET;
     inet_pton(AF_INET, ip, &servaddr.sin_addr);
     servaddr.sin_port = htons(port);
     if (bind(listenfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) == -1) {
@@ -66,7 +66,7 @@ static void do_epoll(int listenfd) {
     epollfd = epoll_create(FDSIZE);
     add_event(epollfd, listenfd, EPOLLIN);
     for ( ; ; ) {
-        ready_cnt = epoll_wait(epollfd, evernts, EPOLLEVENTS, -1);
+        ready_cnt = epoll_wait(epollfd, events, EPOLLEVENTS, -1);
         handle_events(epollfd, events, ready_cnt, listenfd, buf);
     }
     close(epollfd);
@@ -94,7 +94,7 @@ static void handle_accept(int epollfd, int listenfd) {
 
     clifd = accept(listenfd, (struct sockaddr*) &cliaddr, &cliaddrlen);
     if (clifd == -1)
-        peerror("Accept error:");
+        perror("Accept error:");
     else {
         printf("Accept a new client: %s: %d\n",
                 inet_ntoa(cliaddr.sin_addr), cliaddr.sin_port);
