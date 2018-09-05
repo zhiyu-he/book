@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 #include <time.h>
 #include <unistd.h>
+#include <signal.h>
 
 
 
@@ -22,14 +23,14 @@ struct global_args {
     int time;       /* -t option to tell how much time we will run */
     char *ip;       /* -a option to tell which server ip to connect */
     int len;        /* -l option to tell how many bytes we will send */
-}
+};
 
 struct statistics {
     clock_t start_time;
     clock_t total_delay;
     int query_num;
     int byte_num;
-}
+};
 
 static void handle_connection(int sockfd, struct global_args *args, struct statistics *stat);
 
@@ -60,7 +61,7 @@ int main(int argc, char **argv) {
 
     args.ret = 0;
     args.time = 10;
-    args.ip = "127.0.0.1";
+    args.ip = "0.0.0.0";
     args.len = 10;
 
     memset(&stat, 0, sizeof(struct statistics));
@@ -72,7 +73,7 @@ int main(int argc, char **argv) {
 
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(SERV_PORT);
+    servaddr.sin_port = htons(SERVER_PORT);
     inet_pton(AF_INET, args.ip, &servaddr.sin_addr);
     connect(sockfd, (struct sockaddr*) &servaddr, sizeof(servaddr));
 
