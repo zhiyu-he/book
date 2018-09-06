@@ -11,7 +11,7 @@
 
 
 
-#define SERVER_ADDR "0.0.0.1"
+#define SERVER_ADDR "127.0.0.1"
 #define SERVER_PORT 9000
 #define FDSIZE     1000
 #define MAXSIZE    87380

@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
 
     args.ret = 0;
     args.time = 10;
-    args.ip = "0.0.0.0";
+    args.ip = "127.0.0.1";
     args.len = 10;
 
     memset(&stat, 0, sizeof(struct statistics));
