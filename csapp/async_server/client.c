@@ -129,7 +129,7 @@ static void handle_connection(int sockfd, struct global_args *args, struct stati
     char *buf = (char *)malloc(args->len);
     memset(buf, 'a', args->len);
 
-    epollfd = epoll_create(FDSIZE);
+    epollfd = epoll_create(FDSIZE); // 无效参数http://man7.org/linux/man-pages/man2/epoll_create.2.html
     add_event(epollfd, sockfd, EPOLLOUT);
     while (time_flag == 0) {
         ready_cnt = epoll_wait(epollfd, events, EPOLLEVENTS, -1);
