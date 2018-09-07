@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <sys/select.h>
-
+#include "../common/csapp.h"
+#include "../common/rio.h"
 /*
  * select函数会一直`阻塞`, 直到读集合中至少有一个描述符准备好可以读。
  * 如何理解阻塞呢?

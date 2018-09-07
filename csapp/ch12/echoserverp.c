@@ -1,6 +1,5 @@
-#include <stdio.h>
-
-
+#include "../common/csapp.h"
+#include "../common/rio.h"
 /*
  * 进程的优劣, 对于在父子进程之间共享`状态`信息, 进程有一个非常清晰的模型: 恭喜那个文件表, 但是不共享用户地址空间.
  *
@@ -13,7 +12,7 @@
 
 void echo(int connfd);
 
-void sigchld_hanlder(int sig) {
+void sigchld_handler(int sig) {
     while (waitpid(-1, 0, WNOHANG) > 0);
     return;
 }
