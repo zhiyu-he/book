@@ -29,3 +29,4 @@
 * 工程
 	* [霍夫曼编码]()
 	* [GO调度算法的演进]()
+	* [JumpConsistentHash, 一致性Hash]()
