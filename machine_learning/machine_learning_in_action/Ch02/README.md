@@ -1,4 +1,4 @@
-### KNN
+### 概念
 
 > knn是一种聚类的算法, 其原理为在给定`(input, labeled_data, label)`的信息下, 以top-k(欧式距离最小)中出现次数最多的label, 作为input的label
 
